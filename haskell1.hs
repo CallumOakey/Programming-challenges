@@ -10,9 +10,9 @@ cypher = [115, 73, 24, 807, 37, 52, 49, 17, 31, 62, 647, 22, 7, 15, 140, 47, 29,
 adjust :: Int -> Int
 adjust x
     | x >= 157 && x < 246 = x - 1
-	| x > 490  && x < 654 = x + 10
-	| x >= 654 && x < 819 = x + 11
-	| x >= 819 = x + 12
+    | x > 490  && x < 654 = x + 10
+    | x >= 654 && x < 819 = x + 11
+    | x >= 819 = x + 12
     | otherwise = x
 adjustedCypher = [adjust x | x <- cypher]
 result = [firstLetters !! (x - 1) | x <- adjustedCypher]
