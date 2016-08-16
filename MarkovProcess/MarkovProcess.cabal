@@ -1,0 +1,34 @@
+name: MarkovProcess
+version: 0.0.1
+cabal-version: 1.12
+build-type: Simple
+license: AllRightsReserved
+description:
+    Automatic text generation using the Markov process of taking training text to associate a word couple with
+    words that could follow.
+    This creates almost coherent text. Sometimes.
+
+executable MarkovProcess
+    main-is: Main.hs
+    build-depends:
+        QuickCheck -any,
+        base -any,
+        doctest -any
+    default-language: Haskell2010
+    hs-source-dirs: src
+    other-modules:
+        Markov
+        Markov.Functions
+        Markov.Functions
+    ghc-options: -ferror-spans
+
+test-suite test-MarkovProcess
+    type: exitcode-stdio-1.0
+    main-is: Main.hs
+    build-depends:
+        QuickCheck -any,
+        base -any,
+        doctest -any
+    default-language: Haskell2010
+    hs-source-dirs: test
+    ghc-options: -ferror-spans
