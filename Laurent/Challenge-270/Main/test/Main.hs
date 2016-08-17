@@ -1,11 +1,11 @@
 -----------------------------------------------------------------------------
 --
--- Module      :  Main
+-- Module      :  Markov
 -- Copyright   :
 -- License     :  AllRightsReserved
 --
--- Maintainer  :
--- Stability   :
+-- Maintainer  :  Laurent Ferier
+-- Stability   :  Under development
 -- Portability :
 --
 -- |
@@ -13,12 +13,19 @@
 -----------------------------------------------------------------------------
 
 module Main (
-    main
+
 ) where
 
-import Test.DocTest
+import Test.HUnit
+import Markov
 
+test1 = Markov.listToString ["a", "b"] ~=? "ab"
+test2 = Markov.listToString ["a", "b"] ~=? "az"
+
+tests = TestList [ TestLabel "Test1" test1, TestLabel "Test2" test2  ]
+
+-- Entry point of the tests
 main :: IO ()
-main = do doctest ["-isrc", "src/Main.hs"]
-
-
+main = do
+    runTestTT tests
+    return ()

@@ -14,6 +14,7 @@ author: Laurent Ferier
 executable Main
     main-is: Main.hs
     build-depends:
+        HUnit -any,
         QuickCheck -any,
         base -any,
         doctest -any,
@@ -24,16 +25,17 @@ executable Main
         Markov
     ghc-options: -ferror-spans
 
-test-suite test-Main
+test-suite test-Markov
     type: exitcode-stdio-1.0
     main-is: Main.hs
     build-depends:
+        HUnit -any,
         QuickCheck -any,
         base -any,
         doctest -any,
         random -any
     default-language: Haskell2010
-    hs-source-dirs: test
+    hs-source-dirs: src test
     other-modules:
         Markov
     ghc-options: -ferror-spans

@@ -14,6 +14,7 @@
 
 module Markov (
     buildMarkov,
+    listToString,
     toString
 ) where
 
@@ -36,21 +37,22 @@ toString :: [((String, String), [String])] -> String
 toString (((x1,x2),choices):xs) = "(" ++ x1 ++ ", " ++ x2 ++ ") -> " ++ (listToString choices) ++ "\n" ++ (toString xs)
 toString _                      = ""
 
+--
 -- Converts a list into its corresponding string
 listToString :: [String] -> String
 listToString (x:xs) = x ++ listToString xs
 listToString _      = ""
 
-chooseInList :: StdGen -> [a] -> a
-chooseInList gen list = ""
+-- chooseInList :: StdGen -> [a] -> a
+-- chooseInList gen list = ""
 
-chooseOutput :: StdGen -> [((String, String), [String])] -> String -> String
-chooseOutput   _                     []  _  _ = ""
-chooseOutput gen (((s1, s2), items):xs) s1 s2 = chooseInList gen items
-chooseOutput gen                 (x:xs) s1 s2 = chooseOutput gen xs s1 s2
+-- chooseOutput :: StdGen -> [((String, String), [String])] -> String -> String
+-- chooseOutput   _                     []  _  _ = ""
+-- chooseOutput gen (((s1, s2), items):xs) s1 s2 = chooseInList gen items
+-- chooseOutput gen                 (x:xs) s1 s2 = chooseOutput gen xs s1 s2
 
 -- Generates the text (of a given length) according to a start element
-generate :: StdGen -> [((String, String), [String])] -> ((String, String), [String]) -> Int -> String
-generate   _      _       _     0 = ""
-generate gen markov element count =
-    chooseOuput gen markov
+-- generate :: StdGen -> [((String, String), [String])] -> ((String, String), [String]) -> Int -> String
+-- generate   _      _       _     0 = ""
+-- generate gen markov element count =
+--    chooseOuput gen markov
