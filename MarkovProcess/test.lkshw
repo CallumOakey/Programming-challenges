@@ -1,0 +1,14 @@
+Version of workspace file format:
+               2
+Time of storage:
+               "Mon Aug 29 01:58:45 Romance Summer Time 2016"
+Name of the workspace:
+               "test"
+File paths of contained packages:
+               ["MarkovProcess\\MarkovProcess.cabal"]
+Maybe file path of an active package:
+               Just "MarkovProcess\\MarkovProcess.cabal"
+Maybe name of an active executable:
+               Nothing
+Version Control System configurations for packages:
+               fromList []

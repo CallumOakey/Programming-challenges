@@ -16,11 +16,14 @@ module Main (
     main
 ) where
 
+import System.IO
 import Markov.Functions
 
 main :: IO ()
 main = do
     text <- getContents
-    wordsList = words text
-    res = markov wordList (markovWordCoupleList wordsList [])
+    wordsList <- words text
+    textZip <- zip (init wordsList) (tail wordsList)
+    wordCouplesList <- markovWordCoupleList textZip []
+    res <- markov wordsList wordCouplesList
     print res

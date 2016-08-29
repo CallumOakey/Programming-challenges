@@ -1,20 +1,19 @@
 -----------------------------------------------------------------------------
 --
--- Module      :  Markov
--- Copyright   :  
+-- Module      :  Main
+-- Copyright   :
 -- License     :  AllRightsReserved
 --
--- Maintainer  :  
--- Stability   :  
--- Portability :  
+-- Maintainer  :
+-- Stability   :
+-- Portability :
 --
 -- |
 --
 -----------------------------------------------------------------------------
 
-module Markov (
-
+module Main (
+    main
 ) where
-
 
 
