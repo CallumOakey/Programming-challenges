@@ -25,5 +25,5 @@ main = do
     wordsList <- words text
     textZip <- zip (init wordsList) (tail wordsList)
     wordCouplesList <- markovWordCoupleList textZip []
-    res <- markov wordsList wordCouplesList
-    print res
+    markovSet <- markov wordsList wordCouplesList
+    return markovSet
