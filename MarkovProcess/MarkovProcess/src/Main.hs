@@ -19,11 +19,11 @@ module Main (
 import System.IO
 import Markov.Functions
 
-main :: IO ()
+main :: IO [()]
 main = do
     text <- getContents
-    wordsList <- words text
-    textZip <- zip (init wordsList) (tail wordsList)
-    wordCouplesList <- markovWordCoupleList textZip []
-    markovSet <- markov wordsList wordCouplesList
-    return markovSet
+    let wordsList = words text
+    let textZip = zip (init wordsList) (tail wordsList)
+    let wordCouplesList = markovWordCoupleList textZip []
+    let markovSet = markov wordsList wordCouplesList
+    sequence (map print markovSet)
