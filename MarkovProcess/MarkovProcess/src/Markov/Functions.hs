@@ -22,9 +22,9 @@ module Markov.Functions (
 -- associated to the word couple by going through the training text and adding
 -- words to the result when they follow the word couple.
 markovResList :: [String] -> (String, String) -> [String]
-markovResList (x:y:xs) aWordCouple
-    | aWordCouple == (x, y) = head xs : markovResList (y:xs) aWordCouple
-    | otherwise = markovResList (y:xs) aWordCouple
+markovResList (x:y:z:xs) aWordCouple
+    | aWordCouple == (x, y) = z : markovResList (y:z:xs) aWordCouple
+    | otherwise = markovResList (y:z:xs) aWordCouple
 markovResList _ aWordCouple = []
 
 -- Takes the full words couple list from a training text and an accumulator,
