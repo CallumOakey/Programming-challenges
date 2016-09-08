@@ -21,12 +21,16 @@ import Markov.Functions
 
 main :: IO ()
 main = do
-    text <- return "a b a a b b a b"
+    text <- getContents
     let wordsList = words text
+    print wordsList
     let textZip = zip (init wordsList) (tail wordsList)
+    print textZip
     let wordCouplesList = markovWordCoupleList textZip []
+    print wordCouplesList
     let markovSet = markov wordsList wordCouplesList
     print markovSet
+    return ()
 
 testText = ["a", "b", "a", "a", "b", "b", "a", "b"]
 zipTestText = zip (init testText) (tail testText)
