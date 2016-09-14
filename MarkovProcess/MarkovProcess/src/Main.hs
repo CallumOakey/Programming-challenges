@@ -26,14 +26,13 @@ main = do
     handle <- openFile "ab.txt" ReadMode
     trainingText <- hGetContents handle 
     let wordsList = words trainingText
-    print wordsList
     let wordsZip = zip (init wordsList) (tail wordsList)
-    print wordsZip
     let wordCouplesList = markovWordCoupleList wordsZip []
-    print wordCouplesList
     let markovSet = markov wordsList wordCouplesList
     print markovSet
     return ()
+    
+--Tests setup
 
 text = "a b a a b b a b"
 textWords = words text
