@@ -35,7 +35,33 @@ markovWordCoupleList (x:xs) res
     | otherwise = markovWordCoupleList xs res
 markovWordCoupleList _ res = []
 
--- Couples the word couples with their associated results string
+-- Uses markovResList to associate to each word couple its list of possible results.
 markov :: [String] -> [(String, String)] -> [((String, String) , [String])]
 markov (x:xs) (aWordCouple:rest) = (aWordCouple, markovResList (x:xs) aWordCouple) : markov xs rest
 markov _ [] = []
+
+-- Create a function to assign the probability values to all of the possibilities of each word couple, based 
+-- on the number of occurences of each word. This could be done by improving markovResList rather than creating
+-- a whole new funtion that will go through the whole text again.
+
+
+
+-- Create a choose 3rd word function that takes a word couple and picks a random 3rd word based on the 
+-- probabilities established in the markov set.
+
+
+
+-- Create a choose random word coule funtion, as it will be used in both the initialise and
+-- generate functions.
+
+
+
+-- Create initialise function that takes the Markov set, chooses a word couple at random, and then 
+-- chooses a 3rd word out of the possibilities.
+
+
+
+
+-- Create a generate function that takes the last 2 words and gives out a 3rd from the list of possibilities.
+-- If the last word couple is not one of the options, then give out a randome word couple.
+
