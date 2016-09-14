@@ -45,9 +45,8 @@ markov _ [] = []
 count :: String -> [String] -> Int
 count a = length . filter (a==)
 
--- Create a function to assign the probability values to all of the possibilities of each word couple, based 
--- on the number of occurences of each word. This could be done by improving markovResList rather than creating
--- a whole new funtion that will go through the whole text again.
+-- Assigns the probability values to each different word of a result list, based 
+-- on the number of occurences of each word.
 
 countResults :: [String] -> [String] -> [(String, Int)]
 countResults (x:xs) acc
