@@ -40,5 +40,6 @@ textZip = zip (init textWords) (tail textWords)
 
 test1 =  markovWordCoupleList textZip [] ~=? [("a","b"), ("b","a"), ("a","a"), ("b","b")]
 test2 =  markov textWords (markovWordCoupleList textZip []) ~=? [(("a","b"),["a","b"]),(("b","a"),["a","b"]),(("a","a"),["b"]),(("b","b"),["a"])]
+test3 = countResults ["a","b","b","a","a","b","a","a","b"] [] ~=? [("a",5),("b",4)]
 
 tests = TestList [ TestLabel "Test1" test1, TestLabel "Test2" test2  ]
