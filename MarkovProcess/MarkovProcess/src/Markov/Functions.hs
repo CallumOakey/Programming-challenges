@@ -15,7 +15,9 @@
 module Markov.Functions (
     markovResList,
     markovWordCoupleList,
-    markov
+    markov,
+    count,
+    countResults
 ) where
 
 -- Takes a training text and a word couple and returns the results string
