@@ -18,7 +18,8 @@ module Markov.Functions (
     markov,
     count,
     countResults,
-    countMarkovSetResults
+    countMarkovSetResults,
+    randWordCouple
 ) where
 
 import System.Random
