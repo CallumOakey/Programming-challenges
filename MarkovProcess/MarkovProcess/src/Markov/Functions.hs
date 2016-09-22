@@ -17,8 +17,11 @@ module Markov.Functions (
     markovWordCoupleList,
     markov,
     count,
-    countResults
+    countResults,
+    countMarkovSetResults
 ) where
+
+import System.Random
 
 -- Takes a training text and a word couple and returns the results string
 -- associated to the word couple by going through the training text and adding
@@ -42,6 +45,8 @@ markov :: [String] -> [(String, String)] -> [((String, String) , [String])]
 markov (x:xs) (aWordCouple:rest) = (aWordCouple, markovResList (x:xs) aWordCouple) : markov xs rest
 markov _ [] = []
 
+
+
 -- Simple count function.
 
 count :: String -> [String] -> Int
@@ -56,13 +61,27 @@ countResults (x:xs) acc
     | otherwise = countResults xs acc
 countResults _ acc = []
 
--- Create a choose 3rd word function that takes a word couple and picks a random 3rd word based on the 
--- probabilities established in the markov set.
+-- Replaces the results list in the markov set with a list of anly all the different words, but associated with the number of 
+-- times it occurs.
 
+countMarkovSetResults :: [((String, String) , [String])] -> [((String, String) , [(String, Int)])]
+countMarkovSetResults (x:xs) = (fst x, countResults (snd x) []) : countMarkovSetResults xs
+countMarkovSetResults _ = []
 
+-- Random number generator within range
+
+rand :: Int -> StdGen -> (Int, StdGen)
+rand a gen = randomR (0,a) gen
 
 -- Create a choose random word coule funtion, as it will be used in both the initialise and
 -- generate functions.
+
+randWordCouple :: [((String, String) , [(String, Int)])] -> StdGen -> ((String, String), StdGen)
+randWordCouple (x:xs) gen = (fst ((x:xs) !! (fst (rand ((length (x:xs)) - 1) gen))), snd (rand ((length (x:xs)) - 1) gen) )
+randWordCouple _ gen = (("",""), snd (rand 1 gen) ) -- Should be an error. Must look into custom errors.
+
+-- Create a choose 3rd word function that takes a word couple and picks a random 3rd word based on the 
+-- probabilities established in the markov set.
 
 
 

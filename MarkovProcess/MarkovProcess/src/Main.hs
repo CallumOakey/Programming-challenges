@@ -26,9 +26,9 @@ main = do
     handle <- openFile "ab.txt" ReadMode
     trainingText <- hGetContents handle 
     let wordsList = words trainingText
-    let wordsZip = zip (init wordsList) (tail wordsList)
-    let wordCouplesList = markovWordCoupleList wordsZip []
-    let markovSet = markov wordsList wordCouplesList
+        wordsZip = zip (init wordsList) (tail wordsList)
+        wordCouplesList = markovWordCoupleList wordsZip []
+        markovSet = countMarkovSetResults (markov wordsList wordCouplesList)
     print markovSet
     return ()
     
@@ -41,5 +41,6 @@ textZip = zip (init textWords) (tail textWords)
 test1 =  markovWordCoupleList textZip [] ~=? [("a","b"), ("b","a"), ("a","a"), ("b","b")]
 test2 =  markov textWords (markovWordCoupleList textZip []) ~=? [(("a","b"),["a","b"]),(("b","a"),["a","b"]),(("a","a"),["b"]),(("b","b"),["a"])]
 test3 =  countResults ["a","b","b","a","a","b","a","a","b"] [] ~=? [("a",5),("b",4)]
+test4 =  countMarkovSetResults [(("a","b"),["a","b"]),(("b","a"),["a","b"]),(("a","a"),["b"]),(("b","b"),["a"])] ~=? [(("a","b"),[("a",1),("b",1)]),(("b","a"),[("a",1),("b",1)]),(("a","a"),[("b",1)]),(("b","b"),[("a",1)])]
 
-tests = TestList [ TestLabel "Test1" test1, TestLabel "Test2" test2, TestLabel "Test3" test3 ]
+tests = TestList [ TestLabel "Test1" test1, TestLabel "Test2" test2, TestLabel "Test3" test3, TestLabel "Test4" test4 ]
