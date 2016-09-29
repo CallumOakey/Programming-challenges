@@ -30,7 +30,8 @@ main = do
         wordsZip = zip (init wordsList) (tail wordsList)
         wordCouplesList = markovWordCoupleList wordsZip []
         markovSet = countMarkovSetResults (markov wordsList wordCouplesList)
-    print markovSet
+        markovRes = unwords (markovResult markovSet 100 (mkStdGen 502220))
+    print markovRes
     return ()
     
 --Tests setup

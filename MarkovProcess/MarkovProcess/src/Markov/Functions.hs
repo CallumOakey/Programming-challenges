@@ -19,7 +19,8 @@ module Markov.Functions (
     count,
     countResults,
     countMarkovSetResults,
-    randWordCouple
+    randWordCouple,
+    markovResult
 ) where
 
 import System.Random
@@ -74,24 +75,63 @@ countMarkovSetResults _ = []
 rand :: Int -> StdGen -> (Int, StdGen)
 rand a gen = randomR (0,a) gen
 
--- Create a choose random word coule funtion, as it will be used in both the initialise and
+-- Choose random word coule funtion, as it will be used in both the initialise and
 -- generate functions.
 
 randWordCouple :: [((String, String) , [(String, Int)])] -> StdGen -> ((String, String), StdGen)
-randWordCouple (x:xs) gen = (fst ((x:xs) !! (fst (rand ((length (x:xs)) - 1) gen))), snd (rand ((length (x:xs)) - 1) gen) )
-randWordCouple _ gen = (("",""), snd (rand 1 gen) ) -- Should be an error. Must look into custom errors.
+randWordCouple markovSet gen = 
+    let randNumber = rand ((length markovSet) - 1) gen
+    in (fst (markovSet !! (fst randNumber)), snd randNumber )
+    
+-- Extract value from a maybe.
 
--- Create a choose 3rd word function that takes a word couple and picks a random 3rd word based on the 
+extract :: Maybe [(String, Int)] -> [(String, Int)]
+extract (Just a) = a
+extract Nothing = [("", 0)]
+
+-- Returns the word chosen by the random number in the results list of a word couple.
+
+resWord :: Int -> [(String, Int)] -> String
+resWord number ((word,count):xs)
+    | number - count > 0 = resWord (number - count) xs
+    | number - count <= 0 = word
+
+-- Choose 3rd word function that takes a word couple and picks a random 3rd word based on the 
 -- probabilities established in the markov set.
 
+thirdWord :: [((String, String) , [(String, Int)])] -> (String,String) -> StdGen -> (String, StdGen)
+thirdWord markovSet couple gen = 
+    let resList = extract(lookup couple markovSet) -- extract can be used here since the word couple's existence is verified in generateNext.
+        probabilitiesLength = foldr (+) 0 (map (snd) resList)
+        randNumber = rand probabilitiesLength gen
+        res = resWord (fst randNumber) resList
+    in (res , snd randNumber)
 
-
--- Create initialise function that takes the Markov set, chooses a word couple at random, and then 
--- chooses a 3rd word out of the possibilities.
-
-
-
-
--- Create a generate function that takes the last 2 words and gives out a 3rd from the list of possibilities.
+-- Generate function that takes the last 2 words and gives out a 3rd from the list of possibilities.
 -- If the last word couple is not one of the options, then give out a randome word couple.
+
+generateNext :: [((String, String) , [(String, Int)])] -> [String] -> Int -> StdGen -> ([String], StdGen)
+generateNext markovSet (x:y:xs) len gen
+    | len <= 0 = ((x:y:xs), gen)
+--    | lookup (last (init (x:y:xs)), last (x:y:xs)) markovSet == Nothing = 
+--        let resCouple = randWordCouple markovSet gen
+--        in generateNext markovSet ((x:y:xs) ++ [fst(fst resCouple), snd(fst resCouple)]) (len - 2) (snd resCouple)
+    | otherwise = 
+        let res = thirdWord markovSet (last (init (x:y:xs)), last (x:y:xs)) gen
+        in generateNext markovSet ((x:y:xs) ++ [fst res]) (len - 1) (snd res)
+generateNext markovSet [] len gen = 
+        let resCouple = randWordCouple markovSet gen
+        in generateNext markovSet ([fst(fst resCouple), snd(fst resCouple)]) (len - 2) (snd resCouple)
+
+-- markovResult function that takes the Markov set and recurcively generates text.
+
+markovResult :: [((String, String) , [(String, Int)])] -> Int -> StdGen -> [String]
+markovResult markovSet len gen = fst (generateNext markovSet [] len gen)
+
+
+
+
+
+
+
 
